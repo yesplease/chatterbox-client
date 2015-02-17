@@ -1,7 +1,5 @@
-
 var app = {
-  // username: window.location.search.substr(10),
-  username: "yourMom",
+  username: window.location.search.substr(10),
   text: "Beware.",
   roomname: "4chan"
 }
@@ -9,10 +7,8 @@ var app = {
 
 var getChats = function(){
  $.ajax({
-    // always use this url
     url: 'https://api.parse.com/1/classes/chatterbox?order=-createdAt',
     type: 'GET',
-    //data: JSON.stringify(app),
     contentType: 'application/json',
     success: function (data) {
       console.log(data);
@@ -25,8 +21,6 @@ var getChats = function(){
   });
 };
 
-
-
 var submitChat = function(chat){
   $.ajax({
     // always use this url
@@ -35,7 +29,7 @@ var submitChat = function(chat){
     data: JSON.stringify(chat),
     contentType: 'application/json',
     success: function (data) {
-      // displayChats(data.results);
+      getChats();
     } ,
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -44,7 +38,6 @@ var submitChat = function(chat){
   });
 };
 
-submitChat(app);
 
 var displayChats = function(chatsArray){
   for (var i = 0; i < chatsArray.length; i++){
@@ -53,9 +46,15 @@ var displayChats = function(chatsArray){
   }
 };
 
-
+//form submit
 $("#refresher").click(getChats);
-$("#send").click(function(){
-  console.log($("#message").attr('value'));
+
+$('#send').click(function() {
+  var input = $('#message').val();
+  app.text = input;
+  submitChat(app);
+  $('#message').val("");
 });
+
+
 
