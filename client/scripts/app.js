@@ -39,10 +39,16 @@ var submitChat = function(chat){
 };
 
 
+window.uniq = [];
+
 var displayChats = function(chatsArray){
-  for (var i = 0; i < chatsArray.length; i++){
-    var chat = _.escape(chatsArray[i].username + ': ' + chatsArray[i].text);
-    $('#chats').append("<li>" + chat + "</li>");
+  for (var i = chatsArray.length - 1; i >= 0; i--){
+    if(uniq.indexOf(chatsArray[i].objectId) === -1){
+      var chat = _.escape(chatsArray[i].username + ': ' + chatsArray[i].text);
+      $('#chats').prepend("<li>" + chat + "</li>");
+      //console.log(chatsArray[i].objectId);
+      uniq.push(chatsArray[i].objectId);
+    }
   }
 };
 
