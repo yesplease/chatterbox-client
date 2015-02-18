@@ -85,7 +85,6 @@ var displayChats = function(chatsArray){
   }
   $("a").on("click", function(){
     var clickedName = $(this).text();
-    var index = app.friends.indexOf(clickedName);
     if (index === -1){
       app.friends.push(clickedName);
     } else {
